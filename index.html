@@ -97,9 +97,14 @@
 				<a-asset-item id="pentagear" src="/mesh/pentagear.glb"></a-asset-item>
 			</a-assets>
 
-			<a-entity gltf-model="#pentagear" rotation="90 0 0"
-				animation="property:position; from:0 0 2; to:0 0 0; loop:0; dur:3000; easing:easeInOutQuad;"
+			<a-entity
+				gltf-model="#pentagear"
+				position="0 0 2"
+				rotation="90 0 0"
+				animation__zoom="property: position; from: 0 0 2; to: 0 0 0; loop: 0; dur: 3000; easing: easeInOutQuad;"
+				animation__spin="property: rotation; from: 90 0 0; to: 90 360 0; loop: true; dur: 12000; easing: linear; delay: 3000;"
 			></a-entity>
+
 			<a-sky color="#000000"></a-sky>
 
 			<a-entity camera look-controls="enabled:false" wasd-controls="enabled:false" position="0 0 1"></a-camera>
