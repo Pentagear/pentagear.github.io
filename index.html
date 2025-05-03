@@ -7,12 +7,84 @@
 		<link rel="canonical" href="https://pentagear.github.io" />
 		<link rel="icon" href="/favicon.png" type="image/x-icon" />
 		<title>pentagear - home</title>
+
+		<script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+
+		<script type="module">
+
+			import { EffectComposer } from '/js/three/addons/postprocessing/EffectComposer.js';
+			import { RenderPass } from '/js/three/addons/postprocessing/RenderPass.js';
+			import { ShaderPass } from '/js/three/addons/postprocessing/ShaderPass.js';
+			import { OutputPass } from '/js/three/addons/postprocessing/OutputPass.js';
+
+			import { RGBShiftShader } from '/js/three/addons/shaders/RGBShiftShader.js';
+			import { DotScreenShader } from '/js/three/addons/shaders/DotScreenShader.js';
+
+			AFRAME.registerComponent( 'effect-composer', {
+				init: function() {
+
+					const sceneEl = this.el.sceneEl;
+
+					this.composer = new EffectComposer( sceneEl.renderer );
+					this.composer.addPass( new RenderPass( sceneEl.object3D, sceneEl.camera ) );
+
+					this.effect1 = new ShaderPass( DotScreenShader );
+					this.effect1.uniforms[ 'scale' ].value = 4;
+					this.composer.addPass( this.effect1 );
+
+					this.effect2 = new ShaderPass( RGBShiftShader );
+					this.effect2.uniforms[ 'amount' ].value = 0.0015;
+					this.composer.addPass( this.effect2 );
+
+					this.effect3 = new OutputPass();
+					this.composer.addPass( this.effect3 );
+
+					sceneEl.effectComposer = this.composer;
+					sceneEl.isUsingEffectComposer = true;
+
+				},
+				tock: function( time, delta ) {
+
+					const sceneEl = this.el.sceneEl;
+
+					if( sceneEl && sceneEl.isUsingEffectComposer && !sceneEl.is('vr-mode') && !sceneEl.is('ar-mode') ) {
+						this.composer.render();
+					} else if( sceneEl ) {
+						sceneEl.renderer.render( sceneEl.object3D, sceneEl.camera );
+					}
+
+				},
+				remove: function() {
+
+					const sceneEl = this.el.sceneEl;
+
+					if( this.composer ) this.composer.dispose();
+
+					if( sceneEl ) {
+						delete sceneEl.effectComposer;
+						delete sceneEl.isUsingEffectComposer;
+					}
+
+				}
+			} );
+
+		</script>
+
 	</head>
 	<body>
-		<header></header>
-		<main>
-			<h1>Home</h1>
-		</main>
-		<footer></footer>
+		<a-scene xr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false" effect-composer>
+
+			<a-assets>
+				<a-asset-item id="pentagear" src="/mesh/pentagear.glb"></a-asset-item>
+			</a-assets>
+
+			<a-entity gltf-model="#pentagear" rotation="90 0 0"
+				animation="property:position; from:0 0 2; to:0 0 0; loop:0; dur:3000; easing:easeInOutQuad;"
+			></a-entity>
+			<a-sky color="#000000"></a-sky>
+
+			<a-entity camera look-controls="enabled:false" wasd-controls="enabled:false" position="0 0 1"></a-camera>
+
+		</a-scene>
 	</body>
 </html>
