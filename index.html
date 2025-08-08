@@ -11,6 +11,27 @@
 		<link rel="icon" href="/favicon.png" type="image/x-icon" />
 		<link rel="canonical" href="https://pentagear.github.io" />
 
+		<style>
+			*, ::before, ::after {
+				box-sizing: border-box;
+				margin: 0;
+				border: none;
+				padding: 0;
+				vertical-align: top;
+			}
+			body {
+				 background: #000;
+			}
+			main {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				z-index: 0;
+				top: 0;
+				left: 0;
+			}
+		</style>
+
 		<script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
 		<script type="importmap">
 			{
@@ -88,213 +109,340 @@
 		</script>
 
 	</head>
-	<body style="background: #000;">
-		<style>
-			*, ::before, ::after {
-				box-sizing: border-box;
-				margin: 0;
-				border: none;
-				padding: 0;
-				vertical-align: top;
-			}
-		</style>
+	<body>
 
-		<!-- Begin: 3D Logo Component -->
-		<a-scene xr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false" effect-composer>
+		<main>
 
-			<a-assets>
-				<a-asset-item id="pentagear" src="/mesh/pentagear.glb"></a-asset-item>
-			</a-assets>
+			<!-- Begin: 3D Logo Component -->
+			<a-scene xr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false" effect-composer>
 
-			<a-entity
-				gltf-model="#pentagear"
-				position="0 0 2"
-				rotation="90 0 0"
-				animation__zoom="property: position; from: 0 0 2; to: 0 0 0; loop: 0; dur: 3000; easing: easeInOutQuad;"
-				animation__spin="property: rotation; from: 90 0 0; to: 90 360 0; loop: true; dur: 12000; easing: linear; delay: 3000;"
-			></a-entity>
+				<a-assets>
+					<a-asset-item id="pentagear" src="/mesh/pentagear.glb"></a-asset-item>
+				</a-assets>
 
-			<a-sky color="#000000"></a-sky>
+				<a-entity
+					gltf-model="#pentagear"
+					position="0 0 2"
+					rotation="90 0 0"
+					animation__zoom="property: position; from: 0 0 2; to: 0 0 0; loop: 0; dur: 3000; easing: easeInOutQuad;"
+					animation__spin="property: rotation; from: 90 0 0; to: 90 360 0; loop: true; dur: 12000; easing: linear; delay: 3000;"
+				></a-entity>
 
-			<a-entity camera look-controls="enabled:false" wasd-controls="enabled:false" position="0 0 1"></a-camera>
+				<a-sky color="#000000"></a-sky>
 
-		</a-scene>
-		<!-- End: 3D Logo Component -->
+				<a-entity camera look-controls="enabled:false" wasd-controls="enabled:false" position="0 0 1"></a-entity>
 
-		<!-- Begin: Overlay Component -->
-		<section id="section-0" class="section overlay">
-			<style>
-				@media (min-width: 0px) {
-					section.section.overlay { --sm-pad: 8px; --lg-pad: 16px; }
-				}
-				@media (min-width: 640px) {
-					section.section.overlay { --sm-pad: 12px; --lg-pad: 24px; }
-				}
-				@media (min-width: 960px) {
-					section.section.overlay { --sm-pad: 16px; --lg-pad: 32px; }
-				}
-				@media (min-width: 1280px) {
-					section.section.overlay { --sm-pad: 20px; --lg-pad: 40px; }
-				}
-				@media (min-width: 1600px) {
-					section.section.overlay { --sm-pad: 24px; --lg-pad: 48px; }
-				}
-				@media (min-width: 1920px) {
-					section.section.overlay { --sm-pad: 28px; --lg-pad: 56px; }
-				}
-				section.section.overlay {
-					display: flex;
-					flex-flow: row nowrap;
-					justify-content: center;
-					align-items: center;
-					padding: var(--lg-pad);
-					width: 100%;
-					height: 100%;
-					position: absolute;
-					z-index: 1;
-					top: 0;
-					left: 0;
-				}
-				section.section.overlay .interior {
-					width: 100%;
-					max-width: 800px;
-				}
-				section.section.overlay .heading {
-					margin: 0;
-					padding: 0;
-				}
-				section.section.overlay .heading svg {
-					display: block;
-					width: 100%;
-					height: auto;
-				}
-				section.section.overlay .about {
-					margin: var(--lg-pad) 0 0 0;
-				}
-				section.section.overlay .about p {
-					margin: 0;
-					padding: 0;
-					font-family: monospace;
-					font-size: 16px;
-					text-align: center;
-					color: #FFF;
-					text-shadow: 2px 0px 1px #000, 0px 2px 1px #000, -2px 0px 1px #000, 0px -2px 1px #000;
-				}
-				section.section.overlay .find-me {
-					display: flex;
-					flex-flow: row wrap;
-					justify-content: center;
-					align-items: center;
-					gap: var(--sm-pad);
-					margin: var(--lg-pad) 0 0 0;
-					padding: 0;
-					list-style-type: none;
-				}
-				section.section.overlay .find-me li {
-					width: calc((100% - (var(--sm-pad) * 5)) / 6);
-				}
-				section.section.overlay .find-me a {
-					display: block;
-					overflow: clip;
-					clip-path: polygon(0% 0%, 80% 0%, 100% 20%, 100% 100%, 20% 100%, 0% 80%);
-					background: rgba(0,0,0,0);
-					opacity: 1.0;
-					transform-origin: 50% 50%;
-					transform: scale(1.0);
-					transition: background 0.25s, opacity 0.25s, transform 0.25s;
-				}
-				section.section.overlay .find-me svg {
-					display: block;
-					width: 100%;
-					aspect-ratio: 1 / 1;
-					fill: #FFFFFF;
-				}
+			</a-scene>
+			<!-- End: 3D Logo Component -->
 
-				/* Hover FX */
+			<!-- Begin: Overlay Component -->
+			<section id="section-0" class="section overlay">
+				<style>
 
-				section.section.overlay .find-me:hover a:not(:hover) {
-					opacity: 0.5;
-					transform: scale(0.5);
-				}
-				section.section.overlay .find-me:hover a:hover {
-					background: rgba(0,0,0,1);
-				}
-			</style>
-			<div class="interior">
-				<h1 class="heading">
-					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 310 90">
-						<title>PENTAGEAR</title>
-						<g fill="#FFF">
-							<polygon points="10 90 0 80 0 0 20 0 30 10 30 70 20 70 10 60 20 60 20 10 10 10 10 90" />
-							<polygon points="35 0 35 80 45 90 65 90 65 80 55 70 55 80 45 80 45 10 55 10 55 60 45 60 55 70 65 70 65 10 55 0 35 0" />
-							<polygon points="80 90 70 80 70 0 90 0 100 10 100 90 90 90 90 10 80 10 80 90" />
-							<polygon points="115 0 115 20 125 30 115 30 115 80 125 80 125 70 135 80 135 90 115 90 105 80 105 0 115 0" />
-							<polygon points="140 10 140 0 160 0 170 10 170 90 150 90 140 80 140 20 150 20 160 30 150 30 150 80 160 80 160 10 140 10" />
-							<polygon points="205 30 205 90 185 90 175 80 175 0 195 0 205 10 185 10 185 80 195 80 195 20 205 30" />
-							<polygon points="210 0 210 80 220 90 240 90 240 80 230 70 230 80 220 80 220 10 230 10 230 60 220 60 230 70 240 70 240 10 230 0 210 0" />
-							<polygon points="245 10 245 0 265 0 275 10 275 90 255 90 245 80 245 20 255 20 265 30 255 30 255 80 265 80 265 10 245 10" />
-							<polygon points="310 10 300 0 280 0 280 80 290 90 290 60 290 10 300 10 300 60 290 60 300 70 300 90 310 90 310 80 300 70 310 70 310 10"/>
-						</g>
-					</svg>
-				</h1>
-				<ul class="find-me">
+					@media (min-width: 0px) {
+						section.section.overlay { --sm-pad: 8px; --lg-pad: 16px; }
+					}
+					@media (min-width: 640px) {
+						section.section.overlay { --sm-pad: 12px; --lg-pad: 24px; }
+					}
+					@media (min-width: 960px) {
+						section.section.overlay { --sm-pad: 16px; --lg-pad: 32px; }
+					}
+					@media (min-width: 1280px) {
+						section.section.overlay { --sm-pad: 20px; --lg-pad: 40px; }
+					}
+					@media (min-width: 1600px) {
+						section.section.overlay { --sm-pad: 24px; --lg-pad: 48px; }
+					}
+					@media (min-width: 1920px) {
+						section.section.overlay { --sm-pad: 28px; --lg-pad: 56px; }
+					}
+					section.section.overlay {
+						display: flex;
+						flex-flow: row nowrap;
+						justify-content: center;
+						align-items: center;
+						padding: var(--lg-pad);
+						width: 100%;
+						height: 100%;
+						position: absolute;
+						z-index: 1;
+						top: 0;
+						left: 0;
+					}
+					section.section.overlay .interior {
+						width: 100%;
+						max-width: 800px;
+					}
+					section.section.overlay .heading svg {
+						display: block;
+						width: 100%;
+						height: auto;
+					}
+					section.section.overlay .about {
+						margin: var(--lg-pad) 0 0 0;
+					}
+					section.section.overlay .about p {
+						margin: 0;
+						padding: 0;
+						font-family: monospace;
+						font-size: 16px;
+						text-align: center;
+						color: #FFF;
+						text-shadow: 2px 0px 1px #000, 0px 2px 1px #000, -2px 0px 1px #000, 0px -2px 1px #000;
+					}
+					section.section.overlay .find-me {
+						display: flex;
+						flex-flow: row wrap;
+						justify-content: center;
+						align-items: center;
+						gap: var(--sm-pad);
+						margin: var(--lg-pad) 0 0 0;
+						padding: 0;
+						list-style-type: none;
+					}
+					section.section.overlay .find-me li {
+						width: calc((100% - (var(--sm-pad) * 5)) / 6);
+					}
+					section.section.overlay .find-me a {
+						display: block;
+						overflow: clip;
+						clip-path: polygon(0% 0%, 80% 0%, 100% 20%, 100% 100%, 20% 100%, 0% 80%);
+						background: rgba(0,0,0,0);
+						opacity: 1.0;
+						transform-origin: 50% 50%;
+						transform: scale(1.0);
+						transition: background 0.25s, opacity 0.25s, transform 0.25s;
+					}
+					section.section.overlay .find-me svg {
+						display: block;
+						width: 100%;
+						aspect-ratio: 1 / 1;
+						fill: #FFFFFF;
+					}
+					section.section.overlay .logo {
+						margin: var(--lg-pad) 0 0 0;
+					}
+					section.section.overlay .logo svg {
+						display: block;
+						margin: 0 auto;
+						width: 64px;
+						height: 64px;
+					}
+
+					/* Hover FX */
+
+					section.section.overlay .find-me:hover a:not(:hover) {
+						opacity: 0.5;
+						transform: scale(0.5);
+					}
+					section.section.overlay .find-me:hover a:hover {
+						background: rgba(0,0,0,1);
+					}
+
+					/* Contact Form */
+
+					.contact-form-open {
+						margin: var(--lg-pad) 0 0 0;
+						padding: 24px;
+						line-height: 32px;
+						font-family: monospace;
+						font-size: 24px;
+						font-weight: 700;
+						cursor: pointer;
+						overflow: clip;
+						clip-path: polygon(
+							0% 0%,
+							calc(100% - 24px) 0%,
+							100% 24px,
+							100% 100%,
+							24px 100%,
+							0% calc(100% - 24px)
+						);
+					}
+
+					.contact-form:not(.show) {
+						display: none !important;
+					}
+					.contact-form .overlay {
+						display: flex;
+						flex-flow: row nowrap;
+						justify-content: center;
+						align-items: center;
+						background: rgba(0,0,0,0.5);
+						position: fixed;
+						z-index: 1;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+					}
+					.contact-form .overlay button {
+						border: none;
+						border-radius: 32px;
+						width: 64px;
+						height: 64px;
+						background: #FFF;
+						box-shadow: 0px 4px 8px #000;
+						position: absolute;
+						top: 100%;
+						left: 50%;
+						transform: translate( -50%, calc(-100% - 16px ) );
+						cursor: pointer;
+					}
+					.contact-form .overlay button::before {
+						content: '';
+						width: 4px;
+						height: 32px;
+						background: #000;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%,-50%) rotate(-45deg);
+					}
+					.contact-form .overlay button::after {
+						content: '';
+						width: 4px;
+						height: 32px;
+						background: #000;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%,-50%) rotate(45deg);
+					}
+					.contact-form .overlay button span {
+						font-size: 0px;
+					}
+					.contact-form .overlay .modal {
+						width: 100%;
+						height: 100%;
+						max-width: 50%;
+						min-width: 400px;
+						max-height: 50%;
+						min-height: 300px;
+						background: #FFF;
+						border-radius: 16px;
+						padding: 16px;
+						box-shadow: 0px 4px 8px #000;
+						overflow: auto;
+					}
+					.contact-form .overlay .modal iframe {
+						display: block;
+						width: 100%;
+						height: 100%;
+					}
+
+				</style>
+				<div class="interior">
+
+					<h1 class="heading">
+						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 310 90">
+							<title>PENTAGEAR</title>
+							<g fill="#FFF">
+								<polygon points="10 90 0 80 0 0 20 0 30 10 30 70 20 70 10 60 20 60 20 10 10 10 10 90" />
+								<polygon points="35 0 35 80 45 90 65 90 65 80 55 70 55 80 45 80 45 10 55 10 55 60 45 60 55 70 65 70 65 10 55 0 35 0" />
+								<polygon points="80 90 70 80 70 0 90 0 100 10 100 90 90 90 90 10 80 10 80 90" />
+								<polygon points="115 0 115 20 125 30 115 30 115 80 125 80 125 70 135 80 135 90 115 90 105 80 105 0 115 0" />
+								<polygon points="140 10 140 0 160 0 170 10 170 90 150 90 140 80 140 20 150 20 160 30 150 30 150 80 160 80 160 10 140 10" />
+								<polygon points="205 30 205 90 185 90 175 80 175 0 195 0 205 10 185 10 185 80 195 80 195 20 205 30" />
+								<polygon points="210 0 210 80 220 90 240 90 240 80 230 70 230 80 220 80 220 10 230 10 230 60 220 60 230 70 240 70 240 10 230 0 210 0" />
+								<polygon points="245 10 245 0 265 0 275 10 275 90 255 90 245 80 245 20 255 20 265 30 255 30 255 80 265 80 265 10 245 10" />
+								<polygon points="310 10 300 0 280 0 280 80 290 90 290 60 290 10 300 10 300 60 290 60 300 70 300 90 310 90 310 80 300 70 310 70 310 10"/>
+							</g>
+						</svg>
+					</h1>
+
+					<ul class="find-me">
+						
+						<li class="twitter">
+							<a href="//x.com/Pentagear" target="_blank" rel="noopener">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
+									<title>Twitter / X</title>
+									<path d="M128,128H0V0h128v128ZM66.791,50.95l-17.477-23.107h-25.313l30.245,39.549-28.665,32.763h12.275l22.124-25.28,19.335,25.28h24.686l-31.528-41.682,26.8-30.631h-12.267l-20.214,23.107ZM38.325,34.801h7.294l43.877,58.013h-6.797l-44.374-58.013Z"/>
+								</svg>
+							</a>
+						</li>
+						<li class="twitch">
+							<a href="//www.twitch.tv/pentagear" target="_blank" rel="noopener">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
+									<title>Twitch</title>
+									<path d="M0,0v128h128V0H0ZM102.209,72.955l-20.896,20.896h-15.523l-10.149,10.149h-10.746v-10.149h-19.104v-56.12l5.373-13.731h71.045v48.955ZM53.85,91.462l10.149-10.149h19.104l11.941-11.941V31.165h-57.314v50.149h16.12v10.149ZM75.94,44.896h7.165v20.874h-7.165v-20.874ZM56.834,44.896h7.165v20.874h-7.165v-20.874Z"/>
+								</svg>
+							</a>
+						</li>
+						<li class="spotify">
+							<a href="//open.spotify.com/user/jx14ellkmmaxmjgnw07cxkwb8" target="_blank" rel="noopener">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
+									<title>Spotify</title>
+									<path d="M0,0v128h128V0H0ZM88.592,88.82c-1.007,1.658-3.166,2.177-4.814,1.166-13.196-8.064-29.806-9.885-49.365-5.418-1.883.431-3.76-.749-4.191-2.632-.431-1.887.745-3.765,2.632-4.196,21.405-4.893,39.766-2.786,54.577,6.266,1.653,1.007,2.173,3.166,1.161,4.814ZM95.471,73.521c-1.274,2.06-3.966,2.707-6.027,1.442-15.102-9.281-38.127-11.974-55.996-6.551-2.313.702-4.762-.604-5.465-2.917-.698-2.318.609-4.758,2.922-5.465,20.407-6.191,45.778-3.194,63.123,7.469,2.06,1.264,2.707,3.966,1.442,6.022ZM103.263,55.75c-1.48,2.496-4.706,3.32-7.202,1.836-18.113-10.756-47.989-11.744-65.282-6.495-2.777.843-5.713-.726-6.551-3.503-.843-2.777.721-5.713,3.503-6.556,19.85-6.027,52.845-4.861,73.697,7.516,2.496,1.484,3.315,4.706,1.836,7.202Z"/>
+								</svg>
+							</a>
+						</li>
+						<li class="steam">
+							<a href="//steamcommunity.com/id/pentagear/" target="_blank" rel="noopener">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
+									<title>Steam</title>
+									<path d="M97.09,30.909c-9.171-9.17-24.039-9.17-33.21,0-4.391,4.391-6.674,10.088-6.86,15.841l-.005-.013-17.489,23.021c-2.601.25-5.15,1.107-7.44,2.543L0,57.339v20.569l24.216,11.292c.497,3.565,2.096,7.006,4.837,9.747,6.695,6.695,17.55,6.695,24.246,0,2.928-2.928,4.575-6.651,4.942-10.474l23.021-17.489-.013-.005c5.753-.186,11.45-2.469,15.841-6.86,9.17-9.171,9.17-24.039,0-33.209ZM50.533,96.181c-5.168,5.168-13.546,5.168-18.714,0-1.424-1.424-2.441-3.095-3.08-4.872l8.497,3.962h0c4.665,2.175,10.211.157,12.387-4.509,2.176-4.665.157-10.211-4.508-12.387l-8.499-3.963c4.689-1.719,10.152-.71,13.916,3.054,5.168,5.168,5.168,13.546,0,18.714ZM128,128H0V0h128v128ZM92.608,35.391c-6.695-6.695-17.55-6.695-24.246,0-6.695,6.695-6.695,17.55,0,24.246,6.695,6.695,17.55,6.695,24.246,0s6.695-17.55,0-24.246ZM89.842,56.871c-5.168,5.168-13.546,5.168-18.714,0-5.168-5.168-5.168-13.546,0-18.714s13.546-5.168,18.714,0c5.168,5.168,5.168,13.546,0,18.714Z"/>
+								</svg>
+							</a>
+						</li>
+						<li class="discord">
+							<a href="//discordapp.com/users/139879123152535552" target="_blank" rel="noopener">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
+									<title>Discord</title>
+									<path d="M57.903,67.072c.006,4.492-3.171,8.181-7.192,8.181-3.951,0-7.192-3.689-7.192-8.181s3.171-8.188,7.192-8.188,7.261,3.689,7.192,8.188ZM77.289,58.884c-4.021,0-7.192,3.695-7.192,8.188s3.241,8.181,7.192,8.181c4.021,0,7.192-3.689,7.192-8.181.069-4.499-3.171-8.188-7.192-8.188ZM128,0v128H0V0h128ZM91.768,38.223c-5.179-2.423-10.716-4.184-16.505-5.186-.711,1.285-1.542,3.014-2.114,4.39-6.154-.925-12.251-.925-18.292,0-.573-1.375-1.422-3.104-2.139-4.39-5.795,1.003-11.339,2.77-16.517,5.199-10.445,15.784-13.277,31.176-11.861,46.349,6.928,5.173,13.642,8.316,20.242,10.373,1.63-2.243,3.083-4.627,4.335-7.14-2.385-.906-4.669-2.024-6.827-3.323.573-.424,1.133-.868,1.674-1.324,13.163,6.157,27.466,6.157,40.472,0,.547.456,1.107.9,1.674,1.324-2.165,1.305-4.455,2.423-6.84,3.329,1.252,2.506,2.699,4.897,4.335,7.14,6.607-2.057,13.327-5.199,20.255-10.379,1.661-17.59-2.838-32.841-11.892-46.362Z"/>
+								</svg>
+							</a>
+						</li>
+						<li class="codepen">
+							<a href="//codepen.io/pentagear" target="_blank" rel="noopener">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
+									<title>CodePen</title>
+									<path d="M0,0v128h128V0H0ZM104,76.115c0,1.151-.574,2.226-1.531,2.865l-36.554,24.439c-.58.388-1.248.581-1.916.581s-1.336-.194-1.915-.581l-36.554-24.439c-.957-.639-1.531-1.714-1.531-2.865v-24.23c0-1.151.574-2.226,1.531-2.865l36.554-24.439c1.159-.775,2.672-.775,3.831,0l36.554,24.439c.956.64,1.531,1.714,1.531,2.865v24.23ZM45.723,68.135l14.83,9.83v16.138l-26.888-17.976,12.057-7.992ZM39.485,64l-8.592,5.696v-11.391l8.592,5.695ZM45.723,59.865l-12.057-7.992,26.888-17.976v16.138l-14.83,9.83ZM76.039,64l-12.039,7.98-12.039-7.98,12.039-7.98,12.039,7.98ZM82.277,68.135l12.057,7.992-26.888,17.976v-16.138l14.83-9.83ZM82.277,59.865l-14.83-9.83v-16.138l26.888,17.976-12.057,7.992ZM88.515,64l8.592-5.695v11.391l-8.592-5.696Z"/>
+								</svg>
+							</a>
+						</li>
+						
+					</ul>
+
+					<div class="about">
+						<p>LAMP-Stack web &amp; Unreal Engine game dev!<br/><button type="button" class="contact-form-open">Hire Pentagear</button></p>
+					</div>
 					
-					<li class="twitter">
-						<a href="//x.com/Pentagear" target="_blank" rel="noopener">
-							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
-								<title>Twitter / X</title>
-								<path d="M128,128H0V0h128v128ZM66.791,50.95l-17.477-23.107h-25.313l30.245,39.549-28.665,32.763h12.275l22.124-25.28,19.335,25.28h24.686l-31.528-41.682,26.8-30.631h-12.267l-20.214,23.107ZM38.325,34.801h7.294l43.877,58.013h-6.797l-44.374-58.013Z"/>
-							</svg>
-						</a>
-					</li>
-					<li class="twitch">
-						<a href="//www.twitch.tv/pentagear" target="_blank" rel="noopener">
-							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
-								<title>Twitch</title>
-								<path d="M0,0v128h128V0H0ZM102.209,72.955l-20.896,20.896h-15.523l-10.149,10.149h-10.746v-10.149h-19.104v-56.12l5.373-13.731h71.045v48.955ZM53.85,91.462l10.149-10.149h19.104l11.941-11.941V31.165h-57.314v50.149h16.12v10.149ZM75.94,44.896h7.165v20.874h-7.165v-20.874ZM56.834,44.896h7.165v20.874h-7.165v-20.874Z"/>
-							</svg>
-						</a>
-					</li>
-					<li class="spotify">
-						<a href="//open.spotify.com/user/jx14ellkmmaxmjgnw07cxkwb8" target="_blank" rel="noopener">
-							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
-								<title>Spotify</title>
-								<path d="M0,0v128h128V0H0ZM88.592,88.82c-1.007,1.658-3.166,2.177-4.814,1.166-13.196-8.064-29.806-9.885-49.365-5.418-1.883.431-3.76-.749-4.191-2.632-.431-1.887.745-3.765,2.632-4.196,21.405-4.893,39.766-2.786,54.577,6.266,1.653,1.007,2.173,3.166,1.161,4.814ZM95.471,73.521c-1.274,2.06-3.966,2.707-6.027,1.442-15.102-9.281-38.127-11.974-55.996-6.551-2.313.702-4.762-.604-5.465-2.917-.698-2.318.609-4.758,2.922-5.465,20.407-6.191,45.778-3.194,63.123,7.469,2.06,1.264,2.707,3.966,1.442,6.022ZM103.263,55.75c-1.48,2.496-4.706,3.32-7.202,1.836-18.113-10.756-47.989-11.744-65.282-6.495-2.777.843-5.713-.726-6.551-3.503-.843-2.777.721-5.713,3.503-6.556,19.85-6.027,52.845-4.861,73.697,7.516,2.496,1.484,3.315,4.706,1.836,7.202Z"/>
-							</svg>
-						</a>
-					</li>
-					<li class="steam">
-						<a href="//steamcommunity.com/id/pentagear/" target="_blank" rel="noopener">
-							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
-								<title>Steam</title>
-								<path d="M97.09,30.909c-9.171-9.17-24.039-9.17-33.21,0-4.391,4.391-6.674,10.088-6.86,15.841l-.005-.013-17.489,23.021c-2.601.25-5.15,1.107-7.44,2.543L0,57.339v20.569l24.216,11.292c.497,3.565,2.096,7.006,4.837,9.747,6.695,6.695,17.55,6.695,24.246,0,2.928-2.928,4.575-6.651,4.942-10.474l23.021-17.489-.013-.005c5.753-.186,11.45-2.469,15.841-6.86,9.17-9.171,9.17-24.039,0-33.209ZM50.533,96.181c-5.168,5.168-13.546,5.168-18.714,0-1.424-1.424-2.441-3.095-3.08-4.872l8.497,3.962h0c4.665,2.175,10.211.157,12.387-4.509,2.176-4.665.157-10.211-4.508-12.387l-8.499-3.963c4.689-1.719,10.152-.71,13.916,3.054,5.168,5.168,5.168,13.546,0,18.714ZM128,128H0V0h128v128ZM92.608,35.391c-6.695-6.695-17.55-6.695-24.246,0-6.695,6.695-6.695,17.55,0,24.246,6.695,6.695,17.55,6.695,24.246,0s6.695-17.55,0-24.246ZM89.842,56.871c-5.168,5.168-13.546,5.168-18.714,0-5.168-5.168-5.168-13.546,0-18.714s13.546-5.168,18.714,0c5.168,5.168,5.168,13.546,0,18.714Z"/>
-							</svg>
-						</a>
-					</li>
-					<li class="discord">
-						<a href="//discordapp.com/users/139879123152535552" target="_blank" rel="noopener">
-							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
-								<title>Discord</title>
-								<path d="M57.903,67.072c.006,4.492-3.171,8.181-7.192,8.181-3.951,0-7.192-3.689-7.192-8.181s3.171-8.188,7.192-8.188,7.261,3.689,7.192,8.188ZM77.289,58.884c-4.021,0-7.192,3.695-7.192,8.188s3.241,8.181,7.192,8.181c4.021,0,7.192-3.689,7.192-8.181.069-4.499-3.171-8.188-7.192-8.188ZM128,0v128H0V0h128ZM91.768,38.223c-5.179-2.423-10.716-4.184-16.505-5.186-.711,1.285-1.542,3.014-2.114,4.39-6.154-.925-12.251-.925-18.292,0-.573-1.375-1.422-3.104-2.139-4.39-5.795,1.003-11.339,2.77-16.517,5.199-10.445,15.784-13.277,31.176-11.861,46.349,6.928,5.173,13.642,8.316,20.242,10.373,1.63-2.243,3.083-4.627,4.335-7.14-2.385-.906-4.669-2.024-6.827-3.323.573-.424,1.133-.868,1.674-1.324,13.163,6.157,27.466,6.157,40.472,0,.547.456,1.107.9,1.674,1.324-2.165,1.305-4.455,2.423-6.84,3.329,1.252,2.506,2.699,4.897,4.335,7.14,6.607-2.057,13.327-5.199,20.255-10.379,1.661-17.59-2.838-32.841-11.892-46.362Z"/>
-							</svg>
-						</a>
-					</li>
-					<li class="codepen">
-						<a href="//codepen.io/pentagear" target="_blank" rel="noopener">
-							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 128 128">
-								<title>CodePen</title>
-								<path d="M0,0v128h128V0H0ZM104,76.115c0,1.151-.574,2.226-1.531,2.865l-36.554,24.439c-.58.388-1.248.581-1.916.581s-1.336-.194-1.915-.581l-36.554-24.439c-.957-.639-1.531-1.714-1.531-2.865v-24.23c0-1.151.574-2.226,1.531-2.865l36.554-24.439c1.159-.775,2.672-.775,3.831,0l36.554,24.439c.956.64,1.531,1.714,1.531,2.865v24.23ZM45.723,68.135l14.83,9.83v16.138l-26.888-17.976,12.057-7.992ZM39.485,64l-8.592,5.696v-11.391l8.592,5.695ZM45.723,59.865l-12.057-7.992,26.888-17.976v16.138l-14.83,9.83ZM76.039,64l-12.039,7.98-12.039-7.98,12.039-7.98,12.039,7.98ZM82.277,68.135l12.057,7.992-26.888,17.976v-16.138l14.83-9.83ZM82.277,59.865l-14.83-9.83v-16.138l26.888,17.976-12.057,7.992ZM88.515,64l8.592-5.695v11.391l-8.592-5.696Z"/>
-							</svg>
-						</a>
-					</li>
-					
-				</ul>
-				<div class="about">
-					<p>Solo LAMP stack web dev and Unreal Engine game dev!</p>
+				</div>
+			</section>
+			<!-- End: Overlay Component -->
+
+		</main>
+
+		<div class="contact-form">
+			<div class="overlay">
+				<button type="button" class="contact-form-close"><span>Close</span></button>
+				<div class="modal">
+					<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeVq5N-VLkYy6Ol3ctpxfupOjISG5E0LIps0WtQfI1znG48iw/viewform?embedded=true" width="640" height="1708" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
 				</div>
 			</div>
-		</section>
-		<!-- End: Overlay Component -->
+		</div>
+
+		<script>
+			( function() {
+
+				const FormRoot = document.querySelector( 'div.contact-form' );
+				const FormOpen = document.querySelector( 'button.contact-form-open' );
+				const FormClose = document.querySelector( 'button.contact-form-close' );
+
+				FormOpen.addEventListener( 'click', function() {
+					console.log( 'opening form...' );
+					FormRoot.classList.add( 'show' );
+				} );
+
+				FormClose.addEventListener( 'click', function() {
+					console.log( 'closing form...' );
+					FormRoot.classList.remove( 'show' );
+				} );
+
+			} )();
+		</script>
 
 	</body>
 </html>
